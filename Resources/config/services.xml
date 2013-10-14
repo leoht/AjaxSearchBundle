@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    
+    <parameters>
+        <parameter key="leoht_ajaxsearch.db.doctrine_adapter.class">LeoHt\AjaxSearchBundle\Adapter\DoctrineAdapter</parameter>
+        <parameter key="leoht_ajaxsearch.db.propel_adapter.class">LeoHt\AjaxSearchBundle\Adapter\PropelAdapter</parameter>
+        <parameter key="leoht_ajaxsearch.seeker.class">LeoHt\AjaxSearchBundle\Service\Seeker</parameter>
+        <parameter key="leoht_ajaxsearch.serializer.class">LeoHt\AjaxSearchBundle\Service\ResultSerializer</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="leoht_ajaxsearch.seeker" class="%leoht_ajaxsearch.seeker.class%">
+            <argument>%leoht_ajaxsearch.entity%</argument>
+            <argument>%leoht_ajaxsearch.properties%</argument>
+        </service>
+
+        <service id="leoht_ajaxsearch.db.doctrine_adapter" class="%leoht_ajaxsearch.db.doctrine_adapter.class%">
+            <argument type="collection" >
+                <argument key="entity_manager" type="service" id="doctrine.orm.entity_manager" />
+                <argument key="results.display" >%leoht_ajaxsearch.results.display%</argument>
+            </argument>
+        </service>
+
+        <service id="leoht_ajaxsearch.db.propel_adapter" class="%leoht_ajaxsearch.db.propel_adapter.class%">
+            <argument type="collection" >
+                <argument key="results.display" >%leoht_ajaxsearch.results.display%</argument>
+            </argument>
+        </service>
+
+        <service id="leoht_ajaxsearch.serializer" class="%leoht_ajaxsearch.serializer.class%">
+            <argument>%kernel.cache_dir%</argument>
+        </service>
+
+    </services>
+    
+</container>

@@ -1,0 +1,10 @@
+{# search results #}
+[
+    {% for result in results %}{
+        {% for attribute, value in result %}
+            "{{ attribute }}": "{{ value }}"
+            {% if not loop.last %},{% endif %}
+        {% endfor %}
+        {% if not loop.last %},{% endif %}
+    }{% endfor %}
+]

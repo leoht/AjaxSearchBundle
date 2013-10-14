@@ -1,0 +1,32 @@
+form[data-ajaxsearch-form] input {
+    padding: 8px;
+    border: 1px solid #aaa;
+    box-shadow: inset 0px 0px 6px 1px #eee;
+    width: 99%;
+    font-size: 16px;
+}
+
+*[data-ajaxsearch-results] {
+    padding: 4px;
+    background-color: #efefef;
+    border: 1px solid #ddd;
+    width: 99%;
+
+    display: none;
+}
+
+*[data-ajaxsearch-result] {
+    margin: 10px 0 10px 10px;
+    font-family: "Arial", "Helvetica", sans-serif;
+}
+
+*[data-ajaxsearch-result] a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+*[data-ajaxsearch-result] a:hover {
+    background-color: #F5F39F;
+}
