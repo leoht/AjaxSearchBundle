@@ -66,6 +66,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('results')
+                ->addDefaultsIfNotSet()
                 ->treatNullLike(array())
                 ->treatFalseLike(array())
                     ->children()
