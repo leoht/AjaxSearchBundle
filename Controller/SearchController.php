@@ -12,10 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
-* Search controller.
-*
-* @Route("/ajaxsearch")
-*/
+ * Search controller.
+ */
 class SearchController extends ContainerAware
 {
     /**
