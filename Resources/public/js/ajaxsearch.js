@@ -31,28 +31,32 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
 
         var $results = $('*[data-ajaxsearch-results]')
 
-        $.getJSON(url+query, function (data) {
+        try {
+            $.getJSON(url+query, function (data) {
 
-            if (data.length > 0) {
-                var resultHtml = '';
-                $.each(data, function (i, el) {
-                    var resultBody = ''
-                    $.each(el, function (key, value) {
-                        if (0 > key.indexOf('_') && key != 'id')
-                            resultBody += '<span data-ajaxsearch-result-'+key+' >'+ value +'</span> '
-                    })
-                    if (el._link) {
-                        resultBody = '<a href="'+el._link+'" >'+resultBody+'</a>'
-                    }
-                    resultHtml += '<div data-ajaxsearch-result >'+resultBody+'</div>'
-                }) 
-            } else {
-                resultHtml = $('*[data-ajaxsearch-result]').attr('data-noresult-msg') || '<div data-ajaxsearch-result >No result</div>'
-            }
+                if (data.length > 0) {
+                    var resultHtml = '';
+                    $.each(data, function (i, el) {
+                        var resultBody = ''
+                        $.each(el, function (key, value) {
+                            if (0 > key.indexOf('_') && key != 'id')
+                                resultBody += '<span data-ajaxsearch-result-'+key+' >'+ value +'</span> '
+                        })
+                        if (el._link) {
+                            resultBody = '<a href="'+el._link+'" >'+resultBody+'</a>'
+                        }
+                        resultHtml += '<div data-ajaxsearch-result >'+resultBody+'</div>'
+                    }) 
+                } else {
+                    resultHtml = $('*[data-ajaxsearch-result]').attr('data-noresult-msg') || '<div data-ajaxsearch-result >No result</div>'
+                }
 
-            $results.fadeIn(200).html(resultHtml)
-            
-        })
+                $results.fadeIn(200).html(resultHtml)
+                
+            })
+        } catch(e) {
+            $results.fadeIn(200).html('An error has occured.');
+        }
 
     }
 
