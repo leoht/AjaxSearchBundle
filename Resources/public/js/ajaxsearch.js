@@ -9,7 +9,9 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
 
     leoht.AjaxSearch = {}
 
-    leoht.AjaxSearch.init = function () {
+    leoht.AjaxSearch.init = function (onResultCallback) {
+
+        onResultCallback = typeof onResultCallback !== 'undefined' ? onResultCallback : null
 
         var $form = $('form[data-ajaxsearch-form]')
         var $input = $form.find('input[type=text]')
@@ -20,14 +22,14 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
             var q = $input.val()
 
             if (q.length > 0) {
-                leoht.AjaxSearch.getResults(url, q)
+                leoht.AjaxSearch.getResults(url, q, onResultCallback)
             } else {
                 $('*[data-ajaxsearch-results]').fadeOut(200);
             }
         })
     }
 
-    leoht.AjaxSearch.getResults = function (url, query) {
+    leoht.AjaxSearch.getResults = function (url, query, callback) {
 
         var $results = $('*[data-ajaxsearch-results]')
 
@@ -37,15 +39,20 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
                 if (data.length > 0) {
                     var resultHtml = '';
                     $.each(data, function (i, el) {
-                        var resultBody = ''
-                        $.each(el, function (key, value) {
-                            if (0 > key.indexOf('_') && key != 'id')
-                                resultBody += '<span data-ajaxsearch-result-'+key+' >'+ value +'</span> '
-                        })
-                        if (el._link) {
-                            resultBody = '<a href="'+el._link+'" >'+resultBody+'</a>'
-                        }
-                        resultHtml += '<div data-ajaxsearch-result >'+resultBody+'</div>'
+
+                        if (null != callback) {
+                            callback(el)
+                        } else {
+                            var resultBody = ''
+                            $.each(el, function (key, value) {
+                                if (0 > key.indexOf('_') && key != 'id')
+                                    resultBody += '<span data-ajaxsearch-result-'+key+' >'+ value +'</span> '
+                            })
+                            if (el._link) {
+                                resultBody = '<a href="'+el._link+'" >'+resultBody+'</a>'
+                            }
+                            resultHtml += '<div data-ajaxsearch-result >'+resultBody+'</div>'
+                        }  
                     }) 
                 } else {
                     resultHtml = $('*[data-ajaxsearch-result]').attr('data-noresult-msg') || '<div data-ajaxsearch-result >No result</div>'
