@@ -50,12 +50,9 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
                             var i = 0
                             $.each(el, function (key, value) {
                                 if (0 > key.indexOf('_') && key != 'id') {
-                                    resultBody += '<span data-ajaxsearch-result-'+key+' >'+ value +'</span> '
-                                    if (i < Object.keys(el).length-1 )
-                                        resultBody += ' - '
+                                    resultBody += '<span data-ajaxsearch-result-'+key+' >'+ value +'</span>'
+                                    
                                 }
-                                
-                                i++
                             })
                             if (el._link) {
                                 resultBody = '<a href="'+el._link+'" >'+resultBody+'</a>'

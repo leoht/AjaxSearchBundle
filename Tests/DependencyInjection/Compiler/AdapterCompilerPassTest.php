@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the LeoHtAjaxSearchBundle package.
+ *
+ * (c) Léonard Hetsch <http://github.com/leoht> 2013
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace LeoHt\AjaxSearchBundle\Tests\DependencyInjection\Compiler;
 
