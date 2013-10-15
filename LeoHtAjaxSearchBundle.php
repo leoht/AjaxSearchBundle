@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use LeoHt\AjaxSearchBundle\DependencyInjection\AjaxSearchExtension;
 use LeoHt\AjaxSearchBundle\DependencyInjection\Compiler\AdapterCompilerPass;
-use LeoHt\AjaxSearchBundle\DependencyInjection\Compiler\ResultPatternCompilerPass;
+use LeoHt\AjaxSearchBundle\DependencyInjection\Compiler\EngineSeekerCompilerPass;
 
 /**
 * LeoHtAjaxSearchBundle
@@ -23,7 +23,7 @@ class LeoHtAjaxSearchBundle extends Bundle
 
         $container->registerExtension($extension);
 
-        $container->addCompilerPass(new ResultPatternCompilerPass());
+        $container->addCompilerPass(new EngineSeekerCompilerPass());
         $container->addCompilerPass(new AdapterCompilerPass());
         
     }

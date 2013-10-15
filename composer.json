@@ -18,7 +18,8 @@
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "1.2.*",
-        "propel/propel-bundle": "1.2.*"
+        "propel/propel-bundle": "1.2.*",
+        "twig/twig": "~1.8"
     },
     "autoload": {
         "psr-0": { "LeoHt\\AjaxSearchBundle": "" }

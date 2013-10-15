@@ -17,10 +17,6 @@ class DoctrineAdapter implements AdapterInterface
      */
     private $entityManager;
 
-    /**
-     * @var array
-     */
-    private $selectedProperties = array();
 
     /**
      * Constructor.
@@ -34,20 +30,19 @@ class DoctrineAdapter implements AdapterInterface
         }
 
         $this->entityManager = $parameters['entity_manager'];
-        $this->selectedProperties = $parameters['results.display'];
     }
 
     /**
      * {@inheritDoc}
      */
-    public function searchInEntityProperties($search, $entityName, array $properties)
+    public function searchInEntityProperties($search, $entityName, array $properties, array $selectedProperties)
     {
         $attributes = "";
 
-        foreach($this->selectedProperties as $key => $property) {
+        foreach($selectedProperties as $key => $property) {
             $attributes .= " e.$property";
 
-            if ($key < count($this->selectedProperties)-1) {
+            if ($key < count($selectedProperties)-1) {
                 $attributes .= ", ";
             }
         }

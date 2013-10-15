@@ -10,33 +10,18 @@ use \Propel;
 class PropelAdapter implements AdapterInterface
 {
     /**
-     * @var array
-     */
-    private $selectedProperties = array();
-
-    /**
-     * Constructor.
-     * 
-     * @param array $parameters
-     */
-    public function __construct(array $parameters)
-    {
-        $this->selectedProperties = $parameters['results.display'];
-    }
-
-    /**
      * {@inheritDoc}
      */
-    public function searchInEntityProperties($search, $entityName, array $properties)
+    public function searchInEntityProperties($search, $entityName, array $properties, array $selectedProperties)
     {
         $connection = Propel::getConnection();
 
         $attributes = "";
 
-        foreach($this->selectedProperties as $key => $property) {
+        foreach($selectedProperties as $key => $property) {
             $attributes .= " $property";
 
-            if ($key < count($this->selectedProperties)-1) {
+            if ($key < count($selectedProperties)-1) {
                 $attributes .= ", ";
             }
         }

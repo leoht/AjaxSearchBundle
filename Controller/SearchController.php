@@ -33,6 +33,8 @@ class SearchController extends ContainerAware
     */
     public function resultAction(Request $request)
     {
+        $engine = $request->query->has('_engine') ? $request->get('_engine') : 'main';
+
         if (false === $request->isXmlHttpRequest() && 'dev' !== $this->get('kernel')->getEnvironment()) {
             return new Response('Not allowed from direct access.', 403);
         }
@@ -41,11 +43,11 @@ class SearchController extends ContainerAware
 
         $orm = $this->container->getParameter('leoht_ajaxsearch.orm');
 
-        $seeker = $this->get('leoht_ajax_search.seeker');
+        $seeker = $this->get('leoht_ajaxsearch.engines.'. $engine .'.seeker');
 
         $results = $seeker->getResultsFor($search);
 
-        if (false !== $config = $this->container->getParameter('leoht_ajaxsearch.results.provide_link')) {
+        if (false !== $config = $this->container->getParameter('leoht_ajaxsearch.engines.'. $engine .'.results.provide_link')) {
             $results = $this->provideLinksToResults($results, $config);
         }
 
@@ -77,8 +79,7 @@ class SearchController extends ContainerAware
 
             $routeParams = array();
 
-            foreach($parameters as $name => $values) {
-                $value = $values['value'];
+            foreach($parameters as $name => $value) {
                 $routeParams[$name] = $result[$value];
             }
 

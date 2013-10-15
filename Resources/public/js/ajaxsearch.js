@@ -15,6 +15,9 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
 
         var $form = $('form[data-ajaxsearch-form]')
         var $input = $form.find('input[type=text]')
+        var $engine = $form.find('input[name=_engine]')
+
+        var engine = $engine ? $engine.val() : 'main'
 
         var url = $form.attr('action')
 
@@ -22,19 +25,19 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
             var q = $input.val()
 
             if (q.length > 0) {
-                leoht.AjaxSearch.getResults(url, q, onResultCallback)
+                leoht.AjaxSearch.getResults(url, q, engine, onResultCallback)
             } else {
                 $('*[data-ajaxsearch-results]').fadeOut(200);
             }
         })
     }
 
-    leoht.AjaxSearch.getResults = function (url, query, callback) {
+    leoht.AjaxSearch.getResults = function (url, query, engine, callback) {
 
         var $results = $('*[data-ajaxsearch-results]')
 
         try {
-            $.getJSON(url+query, function (data) {
+            $.getJSON(url+query, { _engine: engine }, function (data) {
 
                 if (data.length > 0) {
                     var resultHtml = '';
@@ -44,9 +47,15 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
                             callback(el)
                         } else {
                             var resultBody = ''
+                            var i = 0
                             $.each(el, function (key, value) {
-                                if (0 > key.indexOf('_') && key != 'id')
+                                if (0 > key.indexOf('_') && key != 'id') {
                                     resultBody += '<span data-ajaxsearch-result-'+key+' >'+ value +'</span> '
+                                    if (i < Object.keys(el).length-1 )
+                                        resultBody += ' - '
+                                }
+                                
+                                i++
                             })
                             if (el._link) {
                                 resultBody = '<a href="'+el._link+'" >'+resultBody+'</a>'

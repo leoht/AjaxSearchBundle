@@ -22,11 +22,14 @@ class AdapterCompilerPass implements CompilerPassInterface
 
         $container->setAlias('leoht_ajaxsearch.db.adapter', $adapterServiceId);
 
-        $seekerDefinition = $container->getDefinition('leoht_ajaxsearch.seeker');
+        $seekers = $container->findTaggedServiceIds('leoht_ajaxsearch.seeker');
 
-        $seekerDefinition->addMethodCall(
-            'setAdapter',
-            array(new Reference($adapterServiceId))
-        );
+        foreach($seekers as $id => $attributes) {
+            $seekerDefinition = $container->getDefinition($id);
+            $seekerDefinition->addMethodCall(
+                'setAdapter',
+                array(new Reference($adapterServiceId))
+            );
+        }
     }
 }

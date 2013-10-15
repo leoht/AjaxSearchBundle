@@ -15,13 +15,17 @@ class ResultPatternCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $pattern = $container->getParameter('leoht_ajaxsearch.results.pattern');
+        $engines = $container->getParameter('leoht_ajaxsearch.engines');
 
-        if (null === $pattern) {
-            $pattern = $this->buildDefaultPattern($container);
-        }
+        foreach($engines as $engine) {
+            $pattern = $container->getParameter('leoht_ajaxsearch.engines.'. $engine .'.results.pattern');
 
-        $container->setParameter('leoht_ajaxsearch.results.pattern', $pattern);
+            if (null === $pattern) {
+                $pattern = $this->buildDefaultPattern($engine, $container);
+            }
+
+            $container->setParameter('leoht_ajaxsearch.engines.'. $engine .'.results.pattern', $pattern);
+        } 
     }
 
     /**
@@ -30,11 +34,11 @@ class ResultPatternCompilerPass implements CompilerPassInterface
      * @param ContainerBuilder $container
      * @return string
      */
-    private function buildDefaultPattern(ContainerBuilder $container)
+    private function buildDefaultPattern($engine, ContainerBuilder $container)
     {
         $pattern = '';
 
-        $selectedProperties = $container->getParameter('leoht_ajaxsearch.results.display');
+        $selectedProperties = $container->getParameter('leoht_ajaxsearch.engines.'. $engine .'.results.display');
 
         foreach($selectedProperties as $key => $property) {
             $pattern .= '{'.$property.'}';

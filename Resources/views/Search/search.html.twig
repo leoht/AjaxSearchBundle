@@ -2,14 +2,25 @@
 
 {% block body %}
 <div>
-    {% block ajaxsearch_form %}
-        <form data-ajaxsearch-form method="GET" action="{{ path('leoht_ajaxsearch_result', { 'search' : null }) }}" >
-            <input type="text" name="search" placeholder="Search..." />
-        </form>
+    <form data-ajaxsearch-form method="GET"
+        action="{{ path('leoht_ajaxsearch_result', { 'search' : null }) }}"
+    >
 
-        <div data-ajaxsearch-results >
+        <input type="text" name="search" 
+            placeholder="{% block placeholder %}{% if placeholder is defined %}{{ placeholder }}{% else %}Search...{% endif %}{% endblock placeholder %}"
+        />
 
-        </div>
-    {% endblock %}
+        <input type="hidden" name="_engine"
+            value="{% block engine_name %}{% if engine is defined %}{{ engine }}{% else %}main{% endif %}{% endblock engine_name %}"
+        />
+
+    </form>
+
+    <div class="{% block resultblock_classes %}{%endblock resultblock_classes %}"
+        data-ajaxsearch-results
+        data-noresult-msg="{% block noresult_message %}{% if noresult_message is defined %}{{ noresult_message }}{% else %}No result{% endif %}{% endblock noresult_message %}"
+    >
+
+    </div>
 </div>
 {% endblock %}
