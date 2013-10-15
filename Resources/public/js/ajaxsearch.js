@@ -64,7 +64,9 @@ window.jQuery || document.write('<script src="http://code.jquery.com/jquery-late
                         }  
                     }) 
                 } else {
-                    resultHtml = $('*[data-ajaxsearch-result]').attr('data-noresult-msg') || '<div data-ajaxsearch-result >No result</div>'
+                    var msg = $('*[data-ajaxsearch-results]').attr('data-noresult-msg')
+                    resultHtml = msg || 'No result'
+                    resultHtml = '<div data-ajaxsearch-result >'+resultHtml+'</div>'
                 }
 
                 $results.fadeIn(200).html(resultHtml)
