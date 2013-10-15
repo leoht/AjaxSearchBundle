@@ -165,3 +165,13 @@ If you prefer, you can use the ```embed``` Twig directive to overwrite the defau
     {% block placeholder %}Search...{% endblock %}
 {% endembed %}
 ```
+###Customized data processing
+When the AJAX response is received by the client, the bundles javascript automatically update your HTML DOM to
+display the search results in a list below the search form. You may want to customize this process and do what
+you want with the received data. You can do this by simply passing a callback to the ```AjaxSearch.init()``` function:
+```js
+AjaxSearch.init(function (data) {
+    // do whatever you want with the data...
+    console.log(data)
+})
+```
