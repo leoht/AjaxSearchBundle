@@ -22,12 +22,7 @@ class Configuration implements ConfigurationInterface
         $supportedOrm = array('doctrine', 'propel');
 
         $rootNode
-            ->treatNullLike(array('enabled' => false))
-            ->treatFalseLike(array('enabled' => false))
             ->children()
-                ->booleanNode('enabled')
-                    ->defaultValue(true)
-                ->end()
                 ->booleanNode('auto_complete')
                     ->defaultValue(true)
                 ->end()

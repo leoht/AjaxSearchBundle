@@ -18,23 +18,21 @@ class AjaxSearchExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if (true === $config['enabled']) {
-            $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-            $loader->load('services.xml');
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.xml');
 
-            $container->setParameter('leoht_ajaxsearch.auto_complete', $config['auto_complete']);
-            $container->setParameter('leoht_ajaxsearch.case_sensitive', $config['case_sensitive']);
-            $container->setParameter('leoht_ajaxsearch.orm', $config['orm']);
+        $container->setParameter('leoht_ajaxsearch.auto_complete', $config['auto_complete']);
+        $container->setParameter('leoht_ajaxsearch.case_sensitive', $config['case_sensitive']);
+        $container->setParameter('leoht_ajaxsearch.orm', $config['orm']);
 
-            $engines = array();
+        $engines = array();
 
-            foreach($config['engines'] as $engine => $engineConfig) {
-                $this->registerEngineConfiguration($engine, $engineConfig, $container);
-                $engines[] = $engine;
-            }
-
-            $container->setParameter('leoht_ajaxsearch.engines', $engines);
+        foreach($config['engines'] as $engine => $engineConfig) {
+            $this->registerEngineConfiguration($engine, $engineConfig, $container);
+            $engines[] = $engine;
         }
+
+        $container->setParameter('leoht_ajaxsearch.engines', $engines);
     }
 
 

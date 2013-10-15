@@ -25,6 +25,5 @@ class LeoHtAjaxSearchBundle extends Bundle
 
         $container->addCompilerPass(new EngineSeekerCompilerPass());
         $container->addCompilerPass(new AdapterCompilerPass());
-        
     }
 }
