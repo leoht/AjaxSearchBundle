@@ -14,3 +14,6 @@ file that was distributed with this source code:
 ```
 Resources/meta/LICENSE
 ```
+##TODO:
+- Cache search queries/results
+- Optimize javascript
